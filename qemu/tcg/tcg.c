@@ -23,6 +23,7 @@
  */
 
 /* define it to use liveness analysis (better code) */
+#include "x86_64.h"
 #define USE_TCG_OPTIMIZATIONS
 
 #include "qemu/osdep.h"
@@ -806,6 +807,7 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
 
     if (unlikely(next > s->code_gen_highwater)) {
         if (tcg_region_alloc(s)) {
+            tb_flush(s->uc->cpu);
             return NULL;
         }
         goto retry;
