@@ -806,9 +806,9 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
 
     if (unlikely(next > s->code_gen_highwater)) {
         if (tcg_region_alloc(s)) {
-            tb_flush(s->uc->cpu);
             return NULL;
         }
+        tb_flush(s->uc->cpu);
         goto retry;
     }
     s->code_gen_ptr = next;
